@@ -1,0 +1,7 @@
+Id: playnite-deletethatfile
+Name: Delete That File!
+Author: Morgan
+Module: DeleteThatFile.ps1
+Version: 0.1
+Type: Script
+Icon: icon.png
