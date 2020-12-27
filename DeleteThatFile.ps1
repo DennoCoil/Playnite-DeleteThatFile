@@ -33,9 +33,14 @@ function DeleteThatFile
         {
 
         If ($_.GameImagePath)
+
         {
+
         Remove-Item
+
         }
+
+        Else $PlayniteApi.Dialogs.ShowMessage("File not found.");
 
         }
 
