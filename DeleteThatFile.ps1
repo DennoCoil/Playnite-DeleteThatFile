@@ -1,6 +1,6 @@
 #CURRENTLY IN TESTING!  DO NOT USE!
 
-#Currently testing:  Showing correct paths
+#Currently testing:  Trying to delete the file
 
 function GetMainMenuItems
 {
@@ -9,35 +9,34 @@ function GetMainMenuItems
     $ExtensionName = "Delete That File!"
     
     $menuItem1 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
-    $menuItem1.Description = "Deletes ROM and compressed files at the Game Path"
+    $menuItem1.Description = "Deletes a single ROM file at the Game Path"
     $menuItem1.FunctionName = "DeleteThatFile"
     $menuItem1.MenuSection = "@$ExtensionName"
 
-    return $menuItem1
+    <#$menuItem2 = New-Object Playnite.SDK.Plugins.ScriptMainMenuItem
+    $menuItem2.Description = "Deletes files at the Game Path with same name but different extension"
+    $menuItem2.FunctionName = "DeleteThatFile"
+    $menuItem2.MenuSection = "@$ExtensionName"
+    #>
+
+
+
+    return $menuItem1,$menuItem2
 
 }
-
 
 function DeleteThatFile
 {
 
-#Setting up variables
+    $PlayniteApi.MainView.SelectedGames | Where-Object {$_.GameImagePath} | ForEach-Object
+    
+        {
 
-$SelectedGames = $PlayniteApi.MainView.SelectedGames
+        If ($_.GameImagePath)
+        {
+        Remove-Item
+        }
 
-$GamesPath = $PlayniteApi.Models.Game.GameImagePath
+        }
 
-    if($SelectedGames)
-
-    {
-	    #Find the Game Path
-	    #If game doesn't have a Game Path, throw an error
-	
-	    $GamesPath | $PlayniteApi.Dialogs.ShowMessage("The current path for the selected games are `"$GamePath`".");
-
-	    #Invoke Powershell and Delete file from system
-
-	    #Mark the gamess as Uninstalled
-
-    }
 }
