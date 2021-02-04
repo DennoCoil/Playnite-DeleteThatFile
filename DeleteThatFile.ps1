@@ -25,29 +25,43 @@ function GetMainMenuItems
 
 }
 
-function DeleteThatFile
-{
+<# Delete that file!  A script to delete games as well as entries.  Version 2
 
-    $PlayniteApi.MainView.SelectedGames | Where-Object {$_.GameImagePath} | ForEach-Object
-    
-        {
+Menu 1:  Delete ROM\Archive and mark entries in Playnite as Uninstalled.
 
-        If ($_.GameImagePath)
+Menu 2:  Delete ROM\Archive and Delete the entry within Playnite.
 
-        {
+#Things to add:
+#Check for other files that have the same name in the directory and delete them too.  (File.bin, File.rom, File.cue, etc)
+#>
 
-        Remove-Item $_.GameImagePath
 
-        }
+$RequestedGames = $PlayniteApi.MainView.SelectedGames | Where-Object {$_.GameImagePath}
+$GamesDeleted = [int] 0
+$GamesNotDeleted = [int] 0
+$CurrentGame = Null
 
-        Else 
-        
-        {
-        
-        $PlayniteApi.Dialogs.ShowMessage("File not found.")
-        
-        }
+<#function Menu1
 
-        }
-
-}
+	$__logger ("$Menu1 of Delete That File selected.")
+	Throw warning message with Yes\No "Are you sure?  This cannot be undone."
+	If No,
+		LOG: $Menu1 cancelled. 
+		BREAK
+	If Yes:
+		LOG: $Menu1 activated
+		For-Each ($iterate in $requestedgames)
+			if (Test-Path $iterate.GameImagePath)
+			{
+				Remove-Item $game.GameImagePath
+				LOG: The file at $ImagePath was deleted.
+			}
+			Else
+			{
+				LOG: The file at $ImagePath was not deleted.
+			}
+			Mark $CurrentGame as Uninstalled
+			LOG:  $CurrentGame marked Uninstalled.
+		MessageBox:  $GamesDeleted " out of " $GamesDeleted + $GamesNotDeleted "  completed successfully!"
+		LOG: "$Menu1 of Delete That File completed successfully!  " $GamesDeleted " were deleted and " $GamesNotDeleted " weren't."
+#>
